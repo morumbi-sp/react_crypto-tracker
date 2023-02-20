@@ -2,7 +2,6 @@ import { createGlobalStyle } from 'styled-components';
 import Router from './Router';
 
 const GlobalStyle = createGlobalStyle`
-    
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -30,6 +29,9 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+  font-family: 'Source Sans Pro', sans-serif;
+  background-color: ${(props) => props.theme.bgColor};
+  color:${(props) => props.theme.textColor};
 }
 ol, ul {
 	list-style: none;
@@ -45,6 +47,12 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+a{
+  text-decoration: none;
+}
+*{
+  box-sizing: border-box;
 }
   `;
 
