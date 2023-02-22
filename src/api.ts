@@ -23,6 +23,5 @@ export const fetchCoinHistory = async (coinId: string) => {
     `https://ohlcv-api.nomadcoders.workers.dev?coinId=${coinId}`
   );
   const json = await response.json();
-  console.log(json);
   return json;
 };
