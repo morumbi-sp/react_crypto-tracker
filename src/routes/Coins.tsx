@@ -6,9 +6,11 @@ import { fetchCoinsData } from '../api';
 
 const Container = styled.div`
   padding: 0px 20px;
+  max-width: 480px;
+  margin: 0 auto;
 `;
 const Header = styled.header`
-  height: 10vh;
+  height: 15vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,8 +19,8 @@ const CoinList = styled.ul``;
 const Coin = styled.li`
   background-color: white;
   color: ${(props) => props.theme.bgColor};
-  margin-bottom: 10px;
-  border-radius: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
   a {
     display: flex;
     align-items: center;
