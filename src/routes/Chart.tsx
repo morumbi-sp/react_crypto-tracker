@@ -6,7 +6,7 @@ interface ICoinId {
 }
 
 function Chart({ coinId }: ICoinId) {
-  const { isLoading, data } = useQuery(['ohlcv', coinId], () =>
+  const { isLoading, data } = useQuery(['coinHistory', coinId], () =>
     fetchCoinHistory(coinId)
   );
   return <h1>Chart</h1>;
