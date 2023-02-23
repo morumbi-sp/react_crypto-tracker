@@ -148,9 +148,11 @@ const Tabs = styled.div`
 const Tab = styled.span<{ isActive?: boolean }>`
   text-align: center;
   text-transform: uppercase;
+
   font-size: 14px;
   font-weight: 400;
-  background-color: ${(props) => props.theme.boxColor};
+  background-color: ${(props) =>
+    props.isActive ? props.theme.accentColor : props.theme.boxColor};
   box-shadow: 0 0.2rem 0.5rem ${(props) => props.theme.shadowColor};
   padding: 7px 0px;
   border-radius: 10px;
@@ -161,7 +163,8 @@ const Tab = styled.span<{ isActive?: boolean }>`
     transition: color 0.3s;
   }
   &:hover {
-    color: ${(props) => props.theme.accentColor};
+    color: ${(props) =>
+      props.isActive ? props.theme.textColor : props.theme.accentColor};
     box-shadow: 0 0.2rem 0.75rem ${(props) => props.theme.shadowHoverColor};
   }
 `;
@@ -236,13 +239,12 @@ function Coin() {
 
           <Switch>
             <Route path={`/:id/price`}>
-              <Price />
+              <Price tickersData={tickersData} />
             </Route>
             <Route path={`/:id/chart`}>
               <Chart coinId={coinId} />
             </Route>
           </Switch>
-          <Tabs></Tabs>
         </>
       )}
     </Container>

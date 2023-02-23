@@ -9,12 +9,14 @@ export const fetchCoinsData = async () => {
 export const fetchCoinInfo = async (coinId: string) => {
   const response = await fetch(`${BASE_URL}/coins/${coinId}`);
   const json = await response.json();
+
   return json;
 };
 
 export const fetchCoinTicker = async (coinId: string) => {
   const response = await fetch(`${BASE_URL}/tickers/${coinId}`);
   const json = await response.json();
+  console.log(json);
   return json;
 };
 
