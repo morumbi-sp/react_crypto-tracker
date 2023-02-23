@@ -2,6 +2,7 @@ import { useQuery } from 'react-query';
 import { fetchCoinHistory } from '../api';
 import ApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
+import styled from 'styled-components';
 
 interface ICoinId {
   coinId: string;
@@ -18,12 +19,20 @@ interface IHistorical {
   volume: string;
 }
 
+const Error = styled.div`
+  margin-top: 100px;
+  text-align: center;
+  font-size: 20px;
+`;
+
 function Chart({ coinId }: ICoinId) {
   const { isLoading, data } = useQuery<IHistorical[]>(
     ['coinHistory', coinId],
     () => fetchCoinHistory(coinId)
   );
-
+  if (data && 'error' in data) {
+    return <Error>Nicco doesn't provide data.</Error>;
+  }
   const options: ApexOptions = {
     theme: {
       mode: 'dark',
