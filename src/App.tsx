@@ -1,6 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
 import Router from './Router';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme } from './theme';
+import styled from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -60,13 +64,37 @@ a{
 }
   `;
 
+const ThemeButton = styled.button`
+  margin-top: 60px;
+  display: flex;
+  position: absolute;
+  left: calc(50% + 140px);
+  border: none;
+  background-color: transparent;
+  z-index: 9999;
+  span {
+    font-size: 35px;
+    font-weight: 200;
+    color: ${(props) => props.theme.textColor};
+  }
+`;
+
 function App() {
+  const [isLight, setIsLight] = useState(true);
+  const themeToggleHandler = () => {
+    console.log('click');
+    setIsLight((prev) => !prev);
+  };
   return (
-    <>
+    <ThemeProvider theme={isLight ? lightTheme : darkTheme}>
+      <ThemeButton onClick={themeToggleHandler}>
+        <span className='material-symbols-outlined'>
+          {isLight ? 'dark_mode' : 'light_mode'}
+        </span>
+      </ThemeButton>
       <GlobalStyle />
       <Router />
-      {/* <ReactQueryDevtools /> */}
-    </>
+    </ThemeProvider>
   );
 }
 

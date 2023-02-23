@@ -5,36 +5,42 @@ import styled from 'styled-components';
 import { fetchCoinsData } from '../api';
 
 const Container = styled.div`
+  width: 450px;
+  margin: auto;
   padding: 0px 20px;
-  max-width: 480px;
-  margin: 0 auto;
 `;
 const Header = styled.header`
-  height: 15vh;
+  height: 10rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 const CoinList = styled.ul``;
 const Coin = styled.li`
-  background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.boxColor};
+  color: ${(props) => props.theme.textColor};
   margin-bottom: 15px;
   border-radius: 10px;
+  box-shadow: 0 0.2rem 0.5rem ${(props) => props.theme.shadowColor};
+  transition: background-color 0.3s, box-shadow 0.3s;
   a {
     display: flex;
+    font-size: 17px;
+    font-weight: 400;
+    padding: 1rem;
+    width: 100%;
     align-items: center;
-    transition: color 0.2s ease-in;
-    padding: 20px;
+    transition: color 0.3s;
   }
   &:hover {
-    a {
-      color: ${(props) => props.theme.accentColor};
-    }
+    color: ${(props) => props.theme.accentColor};
+    box-shadow: 0 0.2rem 0.75rem ${(props) => props.theme.shadowHoverColor};
   }
 `;
 const Title = styled.h1`
   font-size: 48px;
+  font-weight: 600;
   color: ${(props) => props.theme.accentColor};
 `;
 
@@ -65,10 +71,10 @@ function Coins() {
   return (
     <Container>
       <Helmet>
-        <title>Coin</title>
+        <title>Coins</title>
       </Helmet>
       <Header>
-        <Title>Coin</Title>
+        <Title>Coins</Title>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>

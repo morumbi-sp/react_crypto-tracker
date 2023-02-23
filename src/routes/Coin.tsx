@@ -85,17 +85,28 @@ const Container = styled.div`
   padding: 0px 20px;
 `;
 const Header = styled.header`
-  height: 10vh;
+  height: 10rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  a {
-    padding-left: 40px;
+  position: relative;
+`;
+
+const BackBtn = styled(Link)`
+  position: absolute;
+  left: 0;
+  font-size: 2.2rem;
+  display: flex;
+  align-items: center;
+  padding: 0.8rem;
+  span {
+    font-size: 33px;
   }
 `;
 
 const Title = styled.h1`
   font-size: 48px;
+  font-weight: 400;
   color: ${(props) => props.theme.accentColor};
 `;
 
@@ -107,16 +118,17 @@ const Loader = styled.span`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.boxColor};
   padding: 10px 20px;
   border-radius: 10px;
+  box-shadow: 0 0.2rem 0.5rem ${(props) => props.theme.shadowColor};
 `;
 const OverviewItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   span:first-child {
-    font-size: 10px;
+    font-size: 14px;
     font-weight: 400;
     text-transform: uppercase;
     margin-bottom: 5px;
@@ -128,7 +140,7 @@ const Description = styled.p`
 
 const Tabs = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   margin: 25px 0px;
   gap: 10px;
 `;
@@ -136,15 +148,21 @@ const Tabs = styled.div`
 const Tab = styled.span<{ isActive?: boolean }>`
   text-align: center;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.boxColor};
+  box-shadow: 0 0.2rem 0.5rem ${(props) => props.theme.shadowColor};
   padding: 7px 0px;
   border-radius: 10px;
-  color: ${(props) =>
-    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  transition: background-color 0.3s, box-shadow 0.3s;
   a {
-    display: block;
+    width: 100%;
+    align-items: center;
+    transition: color 0.3s;
+  }
+  &:hover {
+    color: ${(props) => props.theme.accentColor};
+    box-shadow: 0 0.2rem 0.75rem ${(props) => props.theme.shadowHoverColor};
   }
 `;
 
@@ -171,6 +189,9 @@ function Coin() {
         </title>
       </Helmet>
       <Header>
+        <BackBtn to={`/`}>
+          <span className='material-symbols-outlined'>arrow_back_ios_new</span>
+        </BackBtn>
         <Title>
           {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
         </Title>
@@ -211,9 +232,6 @@ function Coin() {
             <Tab isActive={priceMatch !== null}>
               <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
-            <Tab>
-              <Link to={`/`}>back &rarr;</Link>
-            </Tab>
           </Tabs>
 
           <Switch>
@@ -224,6 +242,7 @@ function Coin() {
               <Chart coinId={coinId} />
             </Route>
           </Switch>
+          <Tabs></Tabs>
         </>
       )}
     </Container>
