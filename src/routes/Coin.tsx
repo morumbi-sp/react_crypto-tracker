@@ -13,6 +13,7 @@ import ChartSimple from './ChartSimple';
 import { useQuery } from 'react-query';
 import { fetchCoinInfo, fetchCoinTicker } from '../api';
 import { Helmet } from 'react-helmet';
+import ThemeBtn from '../Btn/ThemeBtn';
 
 interface RouteParams {
   coinId: string;
@@ -238,6 +239,7 @@ function Coin() {
         <Title>
           {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
         </Title>
+        <ThemeBtn />
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
