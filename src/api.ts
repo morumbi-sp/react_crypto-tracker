@@ -16,7 +16,7 @@ export const fetchCoinInfo = async (coinId: string) => {
 export const fetchCoinTicker = async (coinId: string) => {
   const response = await fetch(`${BASE_URL}/tickers/${coinId}`);
   const json = await response.json();
-  console.log(json);
+
   return json;
 };
 

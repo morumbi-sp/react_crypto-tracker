@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Price from './Price';
 import Chart from './Chart';
+import ChartSimple from './ChartSimple';
 import { useQuery } from 'react-query';
 import { fetchCoinInfo, fetchCoinTicker } from '../api';
 import { Helmet } from 'react-helmet';
@@ -104,6 +105,15 @@ const BackBtn = styled(Link)`
   }
 `;
 
+const ChartSelectorBtn = styled(Link)`
+  display: flex;
+  align-items: center;
+  padding: 0.8rem;
+  span {
+    font-size: 33px;
+  }
+`;
+
 const Title = styled.h1`
   font-size: 48px;
   font-weight: 400;
@@ -168,12 +178,50 @@ const Tab = styled.span<{ isActive?: boolean }>`
     box-shadow: 0 0.2rem 0.75rem ${(props) => props.theme.shadowHoverColor};
   }
 `;
+const ChartTabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 25px 140px;
+  height: 10px;
+`;
+
+const ChartTab = styled.span<{ isActive?: boolean }>`
+  text-align: center;
+  text-transform: uppercase;
+
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.8;
+  background-color: ${(props) =>
+    props.isActive ? props.theme.accentColor : props.theme.boxColor};
+  box-shadow: 0 0.2rem 0.5rem ${(props) => props.theme.shadowColor};
+  padding: px 0px;
+  :first-child {
+    border-radius: 10px 0 0 10px;
+  }
+  :last-child {
+    border-radius: 0 10px 10px 0;
+  }
+
+  transition: background-color 0.3s, box-shadow 0.3s;
+  a {
+    width: 100%;
+    align-items: center;
+    transition: color 0.3s;
+  }
+  &:hover {
+    color: ${(props) =>
+      props.isActive ? props.theme.textColor : props.theme.accentColor};
+    box-shadow: 0 0.2rem 0.75rem ${(props) => props.theme.shadowHoverColor};
+  }
+`;
 
 function Coin() {
   const { coinId } = useParams<RouteParams>();
   const { state } = useLocation<RouteState>();
   const priceMatch = useRouteMatch('/:coinId/price');
   const chartMatch = useRouteMatch('/:coinId/chart');
+  const simpleChartMatch = useRouteMatch('/:coinId/simpleChart');
 
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ['info', coinId],
@@ -183,6 +231,7 @@ function Coin() {
     ['tickers', coinId],
     () => fetchCoinTicker(coinId)
   );
+
   const loading = infoLoading || tickersLoading;
   return (
     <Container>
@@ -242,7 +291,26 @@ function Coin() {
               <Price tickersData={tickersData} />
             </Route>
             <Route path={`/:id/chart`}>
+              <ChartTabs>
+                <ChartTab isActive={chartMatch !== null}>
+                  <Link to={`/${coinId}/chart`}>Candle</Link>
+                </ChartTab>
+                <ChartTab isActive={simpleChartMatch !== null}>
+                  <Link to={`/${coinId}/simpleChart`}>Line</Link>
+                </ChartTab>
+              </ChartTabs>
               <Chart coinId={coinId} />
+            </Route>
+            <Route path={`/:id/simpleChart`}>
+              <ChartTabs>
+                <ChartTab isActive={chartMatch !== null}>
+                  <Link to={`/${coinId}/chart`}>Candle</Link>
+                </ChartTab>
+                <ChartTab isActive={simpleChartMatch !== null}>
+                  <Link to={`/${coinId}/simpleChart`}>Line</Link>
+                </ChartTab>
+              </ChartTabs>
+              <ChartSimple coinId={coinId} />
             </Route>
           </Switch>
         </>

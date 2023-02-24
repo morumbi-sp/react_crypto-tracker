@@ -25,7 +25,7 @@ const Error = styled.div`
   font-size: 20px;
 `;
 
-function ChartCandle({ coinId }: ICoinId) {
+function ChartSimple({ coinId }: ICoinId) {
   const { isLoading, data } = useQuery<IHistorical[]>(
     ['coinHistory', coinId],
     () => fetchCoinHistory(coinId)
@@ -34,6 +34,9 @@ function ChartCandle({ coinId }: ICoinId) {
     return <Error>Nicco doesn't provide data.</Error>;
   }
   const options: ApexOptions = {
+    theme: {
+      mode: 'dark',
+    },
     chart: {
       height: 300,
       width: 500,
@@ -43,27 +46,32 @@ function ChartCandle({ coinId }: ICoinId) {
       },
     },
     grid: {
-      show: true,
+      show: false,
     },
     stroke: {
       curve: 'smooth',
       width: 4,
     },
     yaxis: {
-      show: true,
+      show: false,
     },
     xaxis: {
       labels: {
-        show: true,
+        show: false,
       },
       axisTicks: {
-        show: true,
+        show: false,
       },
       type: 'datetime',
       categories: data?.map((price) =>
         new Date(price.time_close * 1000).toISOString()
       ),
     },
+    fill: {
+      type: 'gradient',
+      gradient: { gradientToColors: ['#0be881'], stops: [0, 80] },
+    },
+    colors: ['#0fbcf9'],
     tooltip: {
       y: {
         formatter(val, _) {
@@ -73,27 +81,18 @@ function ChartCandle({ coinId }: ICoinId) {
     },
   };
 
-  const candleSeries =
-    data?.map((item) => ({
-      x: new Date(item.time_close),
-      y: [
-        Number(item.open),
-        Number(item.high),
-        Number(item.low),
-        Number(item.close),
-      ],
-    })) ?? [];
+  const closePrice = data?.map((item) => Number(item.close)) ?? [];
   return (
     <>
       {isLoading ? (
         'Loading chart...'
       ) : (
         <ApexChart
-          type='candlestick'
+          type='line'
           series={[
             {
               name: 'Price',
-              data: candleSeries,
+              data: closePrice,
             },
           ]}
           options={options}
@@ -103,6 +102,4 @@ function ChartCandle({ coinId }: ICoinId) {
   );
 }
 
-export default ChartCandle;
-
-//[opening, highest, lowest, closing]
+export default ChartSimple;
