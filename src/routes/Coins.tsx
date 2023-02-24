@@ -1,8 +1,11 @@
 import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { fetchCoinsData } from '../api';
+import { isDarkAtom } from '../atoms';
+import ThemeBtn from '../Btn/ThemeBtn';
 
 const Container = styled.div`
   width: 450px;
@@ -55,6 +58,19 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
+const ThemeButton = styled.button`
+  display: flex;
+  position: absolute;
+  left: calc(50% + 140px);
+  border: none;
+  background-color: transparent;
+  span {
+    font-size: 35px;
+    font-weight: 200;
+    color: ${(props) => props.theme.textColor};
+  }
+`;
+
 interface ICoin {
   id: string;
   name: string;
@@ -67,7 +83,6 @@ interface ICoin {
 
 function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>('allCoins', fetchCoinsData);
-
   return (
     <Container>
       <Helmet>
@@ -75,6 +90,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>Coins</Title>
+        <ThemeBtn />
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>

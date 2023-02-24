@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from './theme';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import { isDarkAtom } from './atoms';
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -63,33 +65,10 @@ a{
 }
   `;
 
-const ThemeButton = styled.button`
-  margin-top: 60px;
-  display: flex;
-  position: absolute;
-  left: calc(50% + 140px);
-  border: none;
-  background-color: transparent;
-  z-index: 9999;
-  span {
-    font-size: 35px;
-    font-weight: 200;
-    color: ${(props) => props.theme.textColor};
-  }
-`;
-
 function App() {
-  const [isLight, setIsLight] = useState(true);
-  const themeToggleHandler = () => {
-    setIsLight((prev) => !prev);
-  };
+  const isDark = useRecoilValue(isDarkAtom);
   return (
-    <ThemeProvider theme={isLight ? lightTheme : darkTheme}>
-      <ThemeButton onClick={themeToggleHandler}>
-        <span className='material-symbols-outlined'>
-          {isLight ? 'dark_mode' : 'light_mode'}
-        </span>
-      </ThemeButton>
+    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyle />
       <Router />
     </ThemeProvider>

@@ -3,6 +3,8 @@ import { fetchCoinHistory } from '../api';
 import ApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import { isDarkAtom } from '../atoms';
 
 interface ICoinId {
   coinId: string;
@@ -26,6 +28,8 @@ const Error = styled.div`
 `;
 
 function ChartCandle({ coinId }: ICoinId) {
+  const isDark = useRecoilValue(isDarkAtom);
+
   const { isLoading, data } = useQuery<IHistorical[]>(
     ['coinHistory', coinId],
     () => fetchCoinHistory(coinId)
@@ -34,6 +38,9 @@ function ChartCandle({ coinId }: ICoinId) {
     return <Error>Nicco doesn't provide data.</Error>;
   }
   const options: ApexOptions = {
+    theme: {
+      mode: isDark ? 'dark' : 'light',
+    },
     chart: {
       height: 300,
       width: 500,
