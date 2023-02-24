@@ -81,7 +81,6 @@ const ThemeButton = styled.button`
 function App() {
   const [isLight, setIsLight] = useState(true);
   const themeToggleHandler = () => {
-    console.log('click');
     setIsLight((prev) => !prev);
   };
   return (
