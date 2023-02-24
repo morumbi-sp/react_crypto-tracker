@@ -47,7 +47,7 @@ function ChartCandle({ coinId }: ICoinId) {
     },
     stroke: {
       curve: 'smooth',
-      width: 4,
+      width: 1,
     },
     yaxis: {
       show: true,
