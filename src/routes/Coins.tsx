@@ -1,10 +1,8 @@
 import { Helmet } from 'react-helmet';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { fetchCoinsData } from '../api';
-import { isDarkAtom } from '../atoms';
 import ThemeBtn from '../Btn/ThemeBtn';
 
 const Container = styled.div`
@@ -56,19 +54,6 @@ const Img = styled.img`
   width: 30px;
   height: 30px;
   margin-right: 10px;
-`;
-
-const ThemeButton = styled.button`
-  display: flex;
-  position: absolute;
-  left: calc(50% + 140px);
-  border: none;
-  background-color: transparent;
-  span {
-    font-size: 35px;
-    font-weight: 200;
-    color: ${(props) => props.theme.textColor};
-  }
 `;
 
 interface ICoin {
