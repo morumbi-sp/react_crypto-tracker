@@ -8,7 +8,7 @@ import {
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Price from './Price';
-import Chart from './Chart';
+import Chart from './ChartCandle';
 import ChartSimple from './ChartSimple';
 import { useQuery } from 'react-query';
 import { fetchCoinInfo, fetchCoinTicker } from '../api';
@@ -97,15 +97,6 @@ const BackBtn = styled(Link)`
   position: absolute;
   left: 0;
   font-size: 2.2rem;
-  display: flex;
-  align-items: center;
-  padding: 0.8rem;
-  span {
-    font-size: 33px;
-  }
-`;
-
-const ChartSelectorBtn = styled(Link)`
   display: flex;
   align-items: center;
   padding: 0.8rem;
