@@ -220,7 +220,8 @@ function Coin() {
   const { coinId } = useParams<RouteParams>();
   const { state } = useLocation<RouteState>();
   const priceMatch = useRouteMatch('/:coinId/price');
-  const chartMatch = useRouteMatch('/:coinId/chart');
+  const chartMatch = useRouteMatch(['/:coinId/chart', '/:coinId/simpleChart']);
+  const candalChartMatch = useRouteMatch('/:coinId/chart');
   const simpleChartMatch = useRouteMatch('/:coinId/simpleChart');
 
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
@@ -292,7 +293,7 @@ function Coin() {
             </Route>
             <Route path={`/:id/chart`}>
               <ChartTabs>
-                <ChartTab isActive={chartMatch !== null}>
+                <ChartTab isActive={candalChartMatch !== null}>
                   <Link to={`/${coinId}/chart`}>Candle</Link>
                 </ChartTab>
                 <ChartTab isActive={simpleChartMatch !== null}>
@@ -303,7 +304,7 @@ function Coin() {
             </Route>
             <Route path={`/:id/simpleChart`}>
               <ChartTabs>
-                <ChartTab isActive={chartMatch !== null}>
+                <ChartTab isActive={candalChartMatch !== null}>
                   <Link to={`/${coinId}/chart`}>Candle</Link>
                 </ChartTab>
                 <ChartTab isActive={simpleChartMatch !== null}>
