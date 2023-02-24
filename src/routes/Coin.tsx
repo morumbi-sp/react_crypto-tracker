@@ -214,7 +214,6 @@ function Coin() {
   const chartMatch = useRouteMatch(['/:coinId/chart', '/:coinId/simpleChart']);
   const candalChartMatch = useRouteMatch('/:coinId/chart');
   const simpleChartMatch = useRouteMatch('/:coinId/simpleChart');
-
   const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
     ['info', coinId],
     () => fetchCoinInfo(coinId)

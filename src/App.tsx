@@ -79,15 +79,15 @@ const ThemeButton = styled.button`
 `;
 
 function App() {
-  const [isLight, setIsLight] = useState(true);
+  const [isDart, setIsDark] = useState(false);
   const themeToggleHandler = () => {
-    setIsLight((prev) => !prev);
+    setIsDark((prev) => !prev);
   };
   return (
-    <ThemeProvider theme={isLight ? lightTheme : darkTheme}>
+    <ThemeProvider theme={isDart ? darkTheme : lightTheme}>
       <ThemeButton onClick={themeToggleHandler}>
         <span className='material-symbols-outlined'>
-          {isLight ? 'dark_mode' : 'light_mode'}
+          {isDart ? 'light_mode' : 'dark_mode'}
         </span>
       </ThemeButton>
       <GlobalStyle />
